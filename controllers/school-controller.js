@@ -1,4 +1,4 @@
-const Substitute = require("../models");
+const { Substitute } = require("../models");
 
 const schoolController = {
   // get all subs for schools to search through
