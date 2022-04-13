@@ -5,7 +5,7 @@ const subController = {
     createSub({ body }, res) {
         Substitute.create(body)
         .then(dbSubData => res.json(dbSubData))
-        .catch(err => res.json(err));
+        .catch(err => res.json(err))
     },
 
     // update a substitute profile by id

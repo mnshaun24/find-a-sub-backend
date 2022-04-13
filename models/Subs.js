@@ -7,6 +7,14 @@ const SubSchema = new Schema(
             required: true,
             trim: true
         },
+        subEmail: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        subPhoneNumber: {
+            type: Number
+        },
         subAvailability: [],
         subZipCode: {
             type: Number,
@@ -14,7 +22,6 @@ const SubSchema = new Schema(
         },
         subTravelRadius: {
             type: Number,
-            required: true
         },
         subSpecialty: {
             type: String,
@@ -24,6 +31,6 @@ const SubSchema = new Schema(
     }
 )
 
-const Substitute = model("subs", SubSchema);
+const Substitute = model("sub", SubSchema);
 
 module.exports = Substitute;
