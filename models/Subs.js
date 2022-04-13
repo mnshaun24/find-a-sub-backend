@@ -15,9 +15,17 @@ const SubSchema = new Schema(
         subPhoneNumber: {
             type: Number
         },
-        subAvailability: [],
+        subAvailability: {
+            type: String,
+            enum: {
+                values: ["m", "t", "w", "th", "f"],
+                message: "{VALUE} is not supported. Please enter letter abbreviation only"
+            }
+        },
         subZipCode: {
             type: Number,
+            min: [5, "please input 5 digit zip code"],
+            max: [5, "please input 5 digit zip code"],
             required: true,            
         },
         subTravelRadius: {
