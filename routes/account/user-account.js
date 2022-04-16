@@ -1,8 +1,8 @@
-const router = require("express").Router();
+// const router = require("express").Router();
 
-const { createUser } = require("../../controllers/user-controller");
+// const { createUser } = require("../../controllers/user-controller");
 
-// set up general routes at /account/sub-account
-router.route("/").post(createUser);
+// // set up general routes at /account/sub-account
+// router.route("/").post(createUser);
 
-module.exports = router;
+// module.exports = router;
