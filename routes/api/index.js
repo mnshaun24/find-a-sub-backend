@@ -8,3 +8,6 @@ router.use("/find-subs", schoolRoutes);
 router.use("/users", userRoutes);
 
 module.exports = router;
+
+// note that api route files are sorted by user usage. 
+// Hence schoolRoutes refers to routes school users use

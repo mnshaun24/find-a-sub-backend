@@ -42,6 +42,6 @@ const SubSchema = new Schema(
     }
 )
 
-const Substitute = model("sub", SubSchema);
+const Substitute = model("Subs", SubSchema);
 
 module.exports = Substitute;
