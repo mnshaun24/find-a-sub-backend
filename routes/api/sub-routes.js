@@ -6,14 +6,14 @@ const {
     deleteSub
 } = require("../../controllers/sub-controller");
 
-// set up general routes at /api/subs
+// set up general routes at /api/subs/:userId
 router
-.route("/")
+.route("/:userId")
 .post(createSub);
 
-// set up routes based on id at api/subs/:id
+// set up routes based on id at api/subs/:userId/:subId
 router
-.route("/:id")
+.route("/:userId/:subId")
 .put(updateSub)
 .delete(deleteSub);
 

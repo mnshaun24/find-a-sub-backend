@@ -4,7 +4,7 @@ const subController = require("./sub-controller");
 const userController = {
     // get a user by id so each sub can view only their account and profile
     getUserById({ params }, res) {
-        SubAccount.findOne({ _id: params.id })
+        SubAccount.findOne({ _id: params.userId })
         .populate({
             path: "subs",
             select: "-__v"
@@ -26,7 +26,7 @@ const userController = {
 
     // delete a user account
     deleteUser({ params }, res) {
-        SubAccount.findOneAndDelete({ _id: params.id })
+        SubAccount.findOneAndDelete({ _id: params.userId })
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }
