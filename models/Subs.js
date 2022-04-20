@@ -1,3 +1,7 @@
+// this is the substitute profile model and each one belongs to a user. 
+// Subtitutes create a user identity for login and then create a profile that schools can view. 
+// This is that viewable profile
+
 const { Schema, model } = require("mongoose");
 
 const SubSchema = new Schema(
