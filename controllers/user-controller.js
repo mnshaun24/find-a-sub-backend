@@ -1,14 +1,9 @@
 const SubAccount = require("../models/User");
-const Substitute = require("../models/Subs");
 
 const userController = {
   // get a user by id so each sub can view only their account and profile
   getUserById({ params }, res) {
     SubAccount.findOne({ _id: params.userId })
-      .populate({
-        path: "subProfiles",
-        select: "-__v",
-      })
       .select("-__v")
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
@@ -30,6 +25,15 @@ const userController = {
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.json(err));
   },
+  // get all user accounts this is for development testing purposes
+  displayAllUsers(req, res) {
+    SubAccount.find({})
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+  }
 };
 
 module.exports = userController;

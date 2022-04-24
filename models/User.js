@@ -1,9 +1,9 @@
-// This is the user login in formation and has the Subs profile as a sub document. 
+// This is the user login in formation and has the Subs profile as a sub document.
 // These are for user login and registration. None of this information is meant to be seen by schools
 
 const { Schema, model } = require("mongoose");
 
-const SubAccountSchema = new Schema({
+const UserAccountSchema = new Schema({
   userName: {
     type: String,
     required: true,
@@ -18,15 +18,12 @@ const SubAccountSchema = new Schema({
     type: String,
     required: true,
   },
-  subProfiles: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: "Subs"
-      }
-  ]
+  subProfile: {
+    type: Schema.Types.ObjectId,
+    ref: "Sub"
+  }
 });
 
-
-const SubAccount = model("User", SubAccountSchema);
+const SubAccount = model("User", UserAccountSchema);
 
 module.exports = SubAccount;

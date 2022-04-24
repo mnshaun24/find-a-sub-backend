@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const {
+    displayAllUsers,
     createUser,
     getUserById,
     deleteUser
@@ -10,6 +11,7 @@ const {
 // set up general routes at /api/users
 router
 .route("/")
+.get(displayAllUsers)
 .post(createUser);
 
 

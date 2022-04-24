@@ -1,5 +1,5 @@
 const Substitute = require("./Subs");
-const SubAccount = require("./User");
+const UserAccount = require("./User");
 
 
-module.exports = { Substitute, SubAccount };
+module.exports = { Substitute, UserAccount };

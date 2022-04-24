@@ -1,9 +1,9 @@
-const { Substitute, SubAccount } = require("../models");
+const Substitute = require("../models/User");
 
 const schoolController = {
   // get all subs for schools to search through
   getAllSubs(req, res) {
-    SubAccount.find({})
+    Substitute.find({})
       .then((dbSubData) => res.json(dbSubData))
       .catch((err) => {
         console.log(err);
@@ -13,15 +13,15 @@ const schoolController = {
 
   // get one sub based on their id number
   getSubById({ params }, res) {
-    SubAccount.findOne({ _id: params.subAccountid })
-      .then((dbUserData) => {
-        if (!dbUserData) {
+    Substitute.findOne({ _id: params.Subid })
+      .then((dbSubData) => {
+        if (!dbSubData) {
           res
             .status(404)
             .json({ message: "No such teacher found with this id" });
           return;
         }
-        res.json(dbUserData);
+        res.json(dbSubData);
       })
       .catch((err) => {
         console.log(err);
