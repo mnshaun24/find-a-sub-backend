@@ -1,9 +1,29 @@
-const SubAccount = require("../models/User");
+const User = require("../models/User");
 
 const userController = {
-  // get a user by id so each sub can view only their account and profile
+  // get all users
+  getAllUsers(req, res) {
+    User.find({})
+      .populate({
+        path: "subProfile",
+        select: "-__v",
+      })
+      .select("-__v")
+      .sort({ _id: -1 })
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
+  // get a single user by id
   getUserById({ params }, res) {
-    SubAccount.findOne({ _id: params.userId })
+    User.findOne({ _id: params.id })
+      .populate({
+        path: "subProfile",
+        select: "-__v",
+      })
       .select("-__v")
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
@@ -12,28 +32,35 @@ const userController = {
       });
   },
 
-  // create a new user account
+  // create a user account
   createUser({ body }, res) {
-    SubAccount.create(body)
+    User.create(body)
       .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.json(err));
+  },
+
+  // update a user account
+  updateUser({ params, body }, res) {
+    User.findOneAndUpdate({ _id: params.id }, body, {
+      new: true,
+      runValidators: true,
+    })
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "No user found with this id" });
+          return;
+        }
+        res.json(dbUserData);
+      })
       .catch((err) => res.json(err));
   },
 
   // delete a user account
   deleteUser({ params }, res) {
-    SubAccount.findOneAndDelete({ _id: params.userId })
+    User.findOneAndDelete({ _id: params.id })
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.json(err));
   },
-  // get all user accounts this is for development testing purposes
-  displayAllUsers(req, res) {
-    SubAccount.find({})
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-      console.log(err);
-      res.sendStatus(400);
-    });
-  }
 };
 
 module.exports = userController;

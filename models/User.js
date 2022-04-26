@@ -3,10 +3,11 @@
 
 const { Schema, model } = require("mongoose");
 
-const UserAccountSchema = new Schema({
+const UserSchema = new Schema({
   userName: {
     type: String,
     required: true,
+    unique: true
   },
   userEmail: {
     type: String,
@@ -20,10 +21,10 @@ const UserAccountSchema = new Schema({
   },
   subProfile: {
     type: Schema.Types.ObjectId,
-    ref: "Sub"
-  }
+    ref: "Substitute"
+  }, 
 });
 
-const SubAccount = model("User", UserAccountSchema);
+const User = model("User", UserSchema);
 
-module.exports = SubAccount;
+module.exports = User;

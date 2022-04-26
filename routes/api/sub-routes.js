@@ -1,19 +1,23 @@
 const router = require("express").Router();
 
-const {
+const{
+    getAllSubs,
+    getSubById,
     createSub,
     updateSub,
     deleteSub
 } = require("../../controllers/sub-controller");
 
-// set up general routes at /api/subs/:userId
+// GET and POST at /api/subs
 router
-.route("/:userId")
+.route("/")
+.get(getAllSubs)
 .post(createSub);
 
-// set up routes based on id at api/subs/:userId/:subId
+// GET ONE, PUT, DELETE at /api/subs/:id
 router
-.route("/:userId/:subId")
+.route("/:id")
+.get(getSubById)
 .put(updateSub)
 .delete(deleteSub);
 

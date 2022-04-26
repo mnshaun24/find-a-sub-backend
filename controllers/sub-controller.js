@@ -1,25 +1,53 @@
-const Substitute = require("../models/Subs");
+const Sub = require("../models/Subs");
 
 const subController = {
-  // create a new substitute profile
-  // the substitute model is referenced in the useraccount model so that a user can return only their single profile
+  // get all subs
+  getAllSubs(req, res) {
+    Sub.find({})
+      .populate({
+        path: "attachedUser",
+        select: "-__v",
+      })
+      .select("-__v")
+      .sort({ _id: -1 })
+      .then((dbSubData) => res.json(dbSubData))
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
+  // get a single sub by id
+  getSubById({ params }, res) {
+    Sub.findOne({ _id: params.id })
+      .populate({
+        path: "attachedUser",
+        select: "-__v",
+      })
+      .select("-__v")
+      .then((dbSubData) => res.json(dbSubData))
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
+  // create a sub account
   createSub({ body }, res) {
-    Substitute.create(body)
+    Sub.create(body)
       .then((dbSubData) => res.json(dbSubData))
       .catch((err) => res.json(err));
   },
 
-  // update a substitute profile by id
+  // update a sub account
   updateSub({ params, body }, res) {
-    Substitute.findOneAndUpdate({ _id: params.subId }, body, {
+    Sub.findOneAndUpdate({ _id: params.id }, body, {
       new: true,
       runValidators: true,
     })
       .then((dbSubData) => {
         if (!dbSubData) {
-          res
-            .status(404)
-            .json({ message: "No substitute was found with this id" });
+          res.status(404).json({ message: "No sub found with this id" });
           return;
         }
         res.json(dbSubData);
@@ -27,9 +55,9 @@ const subController = {
       .catch((err) => res.json(err));
   },
 
-  // delete a substitute profile
+  // delete a sub account
   deleteSub({ params }, res) {
-    Substitute.findOneAndDelete({ _id: params.subId })
+    Sub.findOneAndDelete({ _id: params.id })
       .then((dbSubData) => res.json(dbSubData))
       .catch((err) => res.json(err));
   },

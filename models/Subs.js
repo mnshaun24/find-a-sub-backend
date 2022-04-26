@@ -1,15 +1,15 @@
 const { Schema, model } = require("mongoose");
 
-  // this is the substitute profile and each one belongs to a user. 
-// Subtitutes create a user identity for login above and then create a profile that schools can view below here. 
+// this is the substitute profile and each one belongs to a user.
+// Subtitutes create a user identity for login above and then create a profile that schools can view below here.
 // These objects are that viewable profile
 
 const SubstituteSchema = new Schema({
-
   subName: {
     type: String,
     required: true,
     trim: true,
+    unique: true
   },
   subEmail: {
     type: String,
@@ -38,8 +38,12 @@ const SubstituteSchema = new Schema({
     type: String,
     trim: true,
   },
+  attachedUser: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+  }
 });
 
-const Substitute = model("Sub", SubstituteSchema);
+const Substitute = model("Substitute", SubstituteSchema);
 
 module.exports = Substitute;
