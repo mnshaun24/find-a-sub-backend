@@ -5,7 +5,8 @@ const{
     getSubById,
     createSub,
     updateSub,
-    deleteSub
+    deleteSub,
+    getSubsWithAttachedAccounts
 } = require("../../controllers/sub-controller");
 
 // GET and POST at /api/subs
@@ -20,5 +21,10 @@ router
 .get(getSubById)
 .put(updateSub)
 .delete(deleteSub);
+
+// GET with attached accounts at /api/subs/accounts
+router
+.route("/accounts")
+.get(getSubsWithAttachedAccounts);
 
 module.exports = router;

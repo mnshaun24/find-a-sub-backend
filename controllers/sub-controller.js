@@ -4,10 +4,6 @@ const subController = {
   // get all subs
   getAllSubs(req, res) {
     Sub.find({})
-      .populate({
-        path: "attachedUser",
-        select: "-__v",
-      })
       .select("-__v")
       .sort({ _id: -1 })
       .then((dbSubData) => res.json(dbSubData))
@@ -20,10 +16,6 @@ const subController = {
   // get a single sub by id
   getSubById({ params }, res) {
     Sub.findOne({ _id: params.id })
-      .populate({
-        path: "attachedUser",
-        select: "-__v",
-      })
       .select("-__v")
       .then((dbSubData) => res.json(dbSubData))
       .catch((err) => {
@@ -61,6 +53,14 @@ const subController = {
       .then((dbSubData) => res.json(dbSubData))
       .catch((err) => res.json(err));
   },
+
+  getSubsWithAttachedAccounts(req, res) {
+    Sub.find({})
+    .populate("attachedUser")
+    .exec(function (err, sub) {
+      if (err) return handleError(err);
+    })
+  }
 };
 
 module.exports = subController;
