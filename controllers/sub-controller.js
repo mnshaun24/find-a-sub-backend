@@ -1,4 +1,5 @@
 const Sub = require("../models/Subs");
+const User = require("../models/User");
 
 const subController = {
   // get all subs
@@ -33,10 +34,19 @@ const subController = {
   },
 
   // create a sub account
-  createSub({ body }, res) {
-    Sub.create(body)
-      .then((dbSubData) => res.json(dbSubData))
-      .catch((err) => res.json(err));
+  createSub(req, res) {
+    req.body.attachedUser = req.params.userId;
+    Sub.create(req.body).then((dbSubData) => {
+      User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { subProfile: dbSubData._id },
+        { new: true, runValidators: true }
+      )
+        .then((dbUserData) => {
+          res.json(dbUserData);
+        })
+        .catch((err) => res.json(err));
+    });
   },
 
   // update a sub account
@@ -47,7 +57,7 @@ const subController = {
     })
       .then((dbSubData) => {
         if (!dbSubData) {
-          res.status(404).json({ message: "No sub found with this id" });
+          res.status(404).json({ message: "Hey! No sub found with this id" });
           return;
         }
         res.json(dbSubData);

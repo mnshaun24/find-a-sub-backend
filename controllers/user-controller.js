@@ -4,10 +4,6 @@ const userController = {
   // get all users
   getAllUsers(req, res) {
     User.find({})
-      .populate({
-        path: "subProfile",
-        select: "-__v",
-      })
       .select("-__v")
       .sort({ _id: -1 })
       .then((dbUserData) => res.json(dbUserData))
@@ -18,8 +14,8 @@ const userController = {
   },
 
   // get a single user by id
-  getUserById({ params }, res) {
-    User.findOne({ _id: params.id })
+  getUserById(req, res) {    
+    User.findOne({ _id: req.params.id })
       .populate({
         path: "subProfile",
         select: "-__v",
@@ -61,6 +57,7 @@ const userController = {
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.json(err));
   },
+
 };
 
 module.exports = userController;
